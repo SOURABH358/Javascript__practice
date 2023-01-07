@@ -1,54 +1,35 @@
-// function statement
-// a();
-// b();
-function a(){
-    console.log('a function')
-}
-// function expression
-let b = function xyz(){
-    console.log(xyz);
-    
-}
-// b();
-// xyz();
-// difference 
-// function statement are hoisted whereas function are not hoisted
-// function b is an anonymous function
-// function a is a named function
+const root = document.getElementById('root')
 
-// arguments and parameters
-// 1) parameters are the named variables that receives passed on values inside a function
-function x(name){
-    console.log('Hello 🙏🏻 ', name);
+const getName = function(nextStep){
+    const name = '<p>Joe Dallas<p>'
+    nextStep(name);
 }
-// 2) arguments are the values that are passed while calling a function
-// x('Sourabh')
-
-// FIRST ORDER FUNCTION
-// whenever we are using function as a value they are called as a first order functions
-
-let c = function (){
-    console.log(xyz);
-    
+const getAddress = function(value, nextStep){
+    const address = '<p>Street Brabourn House - 3218</p>';
+    nextStep(value + address);
+}
+const getPhone = function(value, nextStep){
+    const phone = '<p>+91 838394xxxx</p>'
+    nextStep(value +  phone)
 }
 
-function y(z){
-    const l = 'I am a first order function';
-    z();
+const getProfession = function(value, nextStep){
+    const profession = '<p>Software developer</p>';
+    nextStep(value + profession)
 }
-
-// y(function(){
-    // console.log('I am a first order function')
-    // console.log(l)
-// })
-function w(){
-    let l = 'I am a first order function';
-    let v = function (){
-        // console.log('I am a first order function')
-        console.log(l)
-    }
-    return v;
+// callback hell
+const getPerson = lastStep =>{
+    getName(function(name){
+        getAddress(name, function(address){
+            getPhone(address, function(phone){
+                getProfession(phone, function(profession){
+                    return lastStep(profession)
+                })
+            })
+        })
+    })
 }
-
-let t = w()
-t();
+getPerson(function(value){
+    console.log(value)
+    root.innerHTML = value;
+})
